@@ -1,0 +1,30 @@
+<%- include('layout', { title: 'Dashboard', content: '' }) %>
+
+<section class="dashboard">
+  <aside class="sidebar">
+    <h2>Dashboard</h2>
+    <ul>
+      <li><a href="/dashboard">Home</a></li>
+      <li><a href="/profile">My Profile</a></li>
+      <li><a href="/projects">Projects</a></li>
+      <li><a href="/messages">Messages</a></li>
+      <li><a href="/settings">Settings</a></li>
+      <li><a href="/logout">Logout</a></li>
+    </ul>
+  </aside>
+
+  <div class="main-content">
+    <h1>Welcome, <%= user.name %>!</h1>
+    <p>This is your personalized dashboard.</p>
+    <img src="<%= user.profilePicture ? user.profilePicture : '/reason.jpg' %>" alt="Profile Picture" />
+
+
+    <% if (!user.bio || !user.skills || user.skills.length === 0) { %>
+      <div class="account-setup">
+        <p>Your account is not fully set up.</p>
+        <a href="/accountCreation" class="setup-btn">Finish Setting Up Your Account</a>
+      </div>
+    <% } %>
+    
+  </div>
+</section>
