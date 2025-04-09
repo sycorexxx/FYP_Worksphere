@@ -1,0 +1,59 @@
+<%- include('layout', { title: 'Signup', content: `
+  <section>
+    <h2>Sign Up</h2>
+    <form id="signupForm" action="/api/auth/signup" method="POST">
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required />
+
+      <label for="age">Age:</label>
+      <input type="number" id="age" name="age" required />
+
+      <label for="role">Role:</label>
+      <select id="role" name="role" required>
+        <option value="">Select Role</option>
+        <option value="client">Client</option>
+        <option value="freelancer">Freelancer</option>
+      </select>
+
+      <button type="submit">Sign Up</button>
+    </form>
+  </section>
+
+  <script>
+    document.getElementById("signupForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const role = document.getElementById("role").value;
+      const age = document.getElementById("age").value;
+
+      try {
+        const response = await fetch("/api/auth/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, password, role, age }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          alert("Signup successful! Redirecting to login...");
+          window.location.href = "/login";
+        } else {
+          alert(result.message || "Signup failed");
+        }
+      } catch (error) {
+        console.error("Signup Error:", error);
+        alert("An error occurred during signup.");
+      }
+    });
+  </script>
+` }) %>
